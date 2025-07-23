@@ -17,19 +17,42 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.blue[100],
-        body: Center(
-          child: GestureDetector(
-            onTap: userTapped,
-            child: Container(
-              height: 200,
-              width: 200,
-              color: Colors.pink,
-              child: Center(child: Text('tap me!')),
-            ),
-          ),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.tealAccent,
+          brightness: Brightness.dark,
         ),
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyHomePage> {
+  int currentIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('test App'), centerTitle: true),
+      body: currentIndex == 0 ? Center(child: Text('1')) : Center(child: Text('2')),
+      bottomNavigationBar: NavigationBar(
+        destinations: [
+          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        onDestinationSelected: (int value) {
+          setState(() {
+            currentIndex = value;
+          });
+        },
+        selectedIndex: currentIndex,
       ),
     );
   }
