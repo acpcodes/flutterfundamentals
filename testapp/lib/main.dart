@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:testapp/data/notifiers.dart';
-import 'package:testapp/views/pages/widget_tree.dart';
+import 'package:testapp/views/pages/welcome_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
               brightness: isDarkMode ? Brightness.dark : Brightness.light,
             ),
           ),
-          home: WidgetTree(),
+          home: WelcomePage(),
         );
       },
     );
