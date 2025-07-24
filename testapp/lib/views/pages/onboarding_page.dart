@@ -18,8 +18,8 @@ class OnboardingPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Lottie.asset('assets/lotties/register.json'),
-                  SizedBox(height: 12),
+                  Lottie.asset('assets/lotties/onboarding.json'),
+                  SizedBox(height: 20),
                   Text('Hello World', style: KTextStyle.titleTealText),
                   SizedBox(height: 50),
                   FilledButton(
