@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
           ListTile(
             title: Text('logout', style: KTextStyle.titleTealText),
             onTap: () {
-              selectedPageNotifier.value = 0;
+              selectedPageNotifier.value = 1;
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
