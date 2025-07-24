@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:testapp/widgets/hero_widgets.dart';
+import 'package:lottie/lottie.dart';
 import 'widget_tree.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
-
+  const RegisterPage({super.key, required this.title});
+  final String title;
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController controllerEmail = TextEditingController();
-  TextEditingController controllerPassword = TextEditingController();
+  TextEditingController controllerEmail = TextEditingController(text: '123');
+  TextEditingController controllerPassword = TextEditingController(text: '12345');
   String confirmedEmail = '123';
   String confirmedPassword = '12345';
 
@@ -26,39 +26,46 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            HeroWidget(title: 'Login'),
-            SizedBox(height: 20.0),
-            TextField(
-              controller: controllerEmail,
-              decoration: InputDecoration(
-                hintText: 'Email',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+      body: Center(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(23.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset('assets/lotties/register.json'),
+                  TextField(
+                    controller: controllerEmail,
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+                    ),
+                    onEditingComplete: () => setState(() {}),
+                  ),
+                  SizedBox(height: 12),
+                  TextField(
+                    controller: controllerPassword,
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      hintText: 'Password',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+                    ),
+                    onEditingComplete: () => setState(() {}),
+                  ),
+                  SizedBox(height: 12),
+                  FilledButton(
+                    onPressed: () {
+                      onLoginPressed();
+                    },
+                    style: FilledButton.styleFrom(minimumSize: Size(double.infinity, 40.0)),
+                    child: Text(widget.title),
+                  ),
+                  SizedBox(height: 20),
+                ],
               ),
-              onEditingComplete: () => setState(() {}),
             ),
-            SizedBox(height: 12),
-            TextField(
-              controller: controllerPassword,
-              decoration: InputDecoration(
-                alignLabelWithHint: true,
-                hintText: 'Password',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
-              ),
-              onEditingComplete: () => setState(() {}),
-            ),
-            SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: () {
-                onLoginPressed();
-              },
-              style: ElevatedButton.styleFrom(minimumSize: Size(double.infinity, 40.0)),
-              child: Text('Login'),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -66,13 +73,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void onLoginPressed() {
     if (confirmedEmail == controllerEmail.text && confirmedPassword == controllerPassword.text) {
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) {
             return WidgetTree();
           },
         ),
+        (route) => false,
       );
     }
   }
