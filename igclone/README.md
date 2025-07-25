@@ -33,6 +33,6 @@
    - Begin implementing the homepage layout (basic structure/skeleton).
    - Research about different state management options available for Flutter.
    - ![](assets/screenshots/day1screenshot1.png "day 1 screenshot")
-   - Will try and implement bottom navigation by day 2.
+   - Will try and implement bottom navigation, dark mode on settings(?) and login page with auth hopefully  by day 2.
 
 # Day 2 - 26 July 2025
