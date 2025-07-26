@@ -36,3 +36,21 @@
    - Will try and implement bottom navigation, dark mode on settings(?) and login page with auth hopefully  by day 2.
 
 # Day 2 - 26 July 2025
+
+**Continuation of layout implementation.**
+
+1. - Implement basic route function for HomePage,SearchPage,AddNewPage,ReelsPage,ProfilePage using NavigationBar and ValueNotifier<>.
+   - ![](assets/recordings/ScreenRecording1.mp4 "Basic Pages and Navigation Day 2")
+
+2. - **State Management Selection**:
+        - Chose *Provider* based on:
+            - Official flutter recommendation
+            - Comprehensive documentation
+            - Lower boilerplate for mid-scale apps
+            - Seamless integration with ValueNotifier
+            - Simplified widget rebuild control
+        - Will perform a deep research regarding Provider and state management in general.
+
+3.  - **Backend Refresher/Research**
+        - Firebase fundamentals: Auth, Firestore, and Storage workflows
+        - Analyze Instagram-like data structures for optimal NoSQL modeling

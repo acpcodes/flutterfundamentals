@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:igclone/views/pages/homepage.dart';
+import 'package:igclone/views/pages/maintree.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const IgClone());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class IgClone extends StatelessWidget {
+  const IgClone({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'IG Clone',
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Color(0xAAE8F0E3))),
-      home: HomePage(),
+      home: MainTree(),
     );
   }
 }
