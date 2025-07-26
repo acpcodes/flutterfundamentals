@@ -40,7 +40,8 @@
 **Continuation of layout implementation.**
 
 1. - Implement basic route function for HomePage,SearchPage,AddNewPage,ReelsPage,ProfilePage using NavigationBar and ValueNotifier<>.
-   - ![](assets/recordings/ScreenRecording1.mp4 "Basic Pages and Navigation Day 2")
+   - ![](https://drive.google.com/file/d/1s7la7CnMos-eG7qD4b_eMoYiBInlpCU_/view?usp=drive_link "Basic Pages and Navigation Day 2")
+   
 
 2. - **State Management Selection**:
         - Chose *Provider* based on:
