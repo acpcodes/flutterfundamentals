@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('assets/logos/logoblacktext.png', height: 35),
+                Image.asset('assets/logos/logoblacktext.svg', height: 35),
                 Row(
                   children: [
                     IconButton(

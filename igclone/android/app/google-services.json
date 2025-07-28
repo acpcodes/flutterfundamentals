@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "702256425402",
+    "project_id": "igclone-878d2",
+    "storage_bucket": "igclone-878d2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702256425402:android:fd6b249b0f003c46cf9583",
+        "android_client_info": {
+          "package_name": "com.example.igclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702256425402-c8mrkc2aff8cln7bftbu1mt42gd503mp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZhpxKLfhIe7OKbbf3d4ps-IrS0K58Is4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702256425402-c8mrkc2aff8cln7bftbu1mt42gd503mp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
