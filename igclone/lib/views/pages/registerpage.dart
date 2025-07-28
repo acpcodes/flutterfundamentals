@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:igclone/data/classes/auth_classs.dart';
 import 'package:igclone/data/constants.dart';
 import 'package:igclone/widgets/textfieldinput.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _bioController.dispose();
     _usernameController.dispose();
   }
 
@@ -35,17 +34,36 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(flex: 2, child: Container()),
-              //!instagram logo
               SvgPicture.asset('assets/logos/logoblacktext.svg', height: 64),
               const SizedBox(height: 64),
-              //!text field input for email
+              Stack(
+                children: [
+                  CircleAvatar(
+                    foregroundImage: NetworkImage(
+                      'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg',
+                    ),
+                    radius: 64,
+                  ),
+                  Positioned(
+                    bottom: -10,
+                    left: 78,
+                    child: IconButton(onPressed: () {}, icon: const Icon(Icons.add_a_photo)),
+                  ),
+                ],
+              ),
+              SizedBox(height: 28),
+              TextFieldInput(
+                hintText: 'Enter Username',
+                textInputType: TextInputType.text,
+                textEditingController: _usernameController,
+              ),
+              const SizedBox(height: 8),
               TextFieldInput(
                 hintText: 'Enter Email',
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailController,
               ),
               const SizedBox(height: 8),
-              //!text field input for password
               //register button
               TextFieldInput(
                 hintText: 'Enter Password',
@@ -55,7 +73,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16),
               InkWell(
-                //?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                onTap: () async {
+                  String res = await AuthMethods().signUpUser(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    username: _usernameController.text,
+                  );
+                  print(res);
+                },
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -66,27 +91,27 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     color: lavenderColor,
                   ),
-                  child: const Text('Login', style: TextStyle(fontSize: 16)),
+                  child: const Text('Sign up', style: TextStyle(fontSize: 16)),
                 ),
               ),
               const SizedBox(height: 12),
               Flexible(flex: 2, child: Container()),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: const Text("Don't have an account? "),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: const Text("Sign Up.", style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       padding: const EdgeInsets.symmetric(vertical: 16),
+              //       child: const Text("Don't have an account? "),
+              //     ),
+              //     GestureDetector(
+              //       onTap: () {},
+              //       child: Container(
+              //         padding: const EdgeInsets.symmetric(vertical: 16),
+              //         child: const Text("Sign Up.", style: TextStyle(fontWeight: FontWeight.bold)),
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
