@@ -3,6 +3,7 @@ import 'package:igclone/data/constants.dart';
 import 'package:igclone/views/pages/loginpage.dart';
 //! import 'package:igclone/views/pages/maintree.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:igclone/views/pages/registerpage.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -21,7 +22,8 @@ class IgClone extends StatelessWidget {
       title: 'IG Clone',
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: mobileLightModeBGColor)),
       // home: MainTree(),
-      home: LoginPage(),
+      // home: LoginPage(),
+      home: RegisterPage(),
     );
   }
 }
