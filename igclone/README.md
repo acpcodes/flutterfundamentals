@@ -55,3 +55,11 @@
 3.  - **Backend Refresher/Research**
         - Firebase fundamentals: Auth, Firestore, and Storage workflows
         - Analyze Instagram-like data structures for optimal NoSQL modeling
+
+
+# Day 3 - 28 July 2025
+
+1.  - Implement basic structure for login and register page.
+2.  - Connect igclone to firebase.
+        - ![](assets/screenshots/day3screenshot1.png "firebase setup1")
+        - ![](assets/screenshots/firebasesetup.png "firebase setup2.")
