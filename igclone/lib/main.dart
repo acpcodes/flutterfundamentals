@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:igclone/data/constants.dart';
-import 'package:igclone/views/pages/loginpage.dart';
-//! import 'package:igclone/views/pages/maintree.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:igclone/views/pages/registerpage.dart';
 import 'firebase_options.dart';
+// import 'package:igclone/views/pages/loginpage.dart';
+// import 'package:igclone/views/pages/maintree.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
