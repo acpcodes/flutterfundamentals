@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:igclone/data/classes/authclass.dart';
 import 'package:igclone/data/constants.dart';
 import 'package:igclone/data/utils.dart';
+import 'package:igclone/views/pages/loginpage.dart';
 import 'package:igclone/widgets/textfieldinput.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -61,11 +62,16 @@ class _RegisterPageState extends State<RegisterPage> {
       _isLoading = false;
     });
     if (!mounted) return;
-    if (res != 'success') {
+    if (res != 'Success!') {
       showSnackBar(res, context);
     } else {
       showSnackBar('Account created successfully!', context);
+      navigateToLogin();
     }
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override

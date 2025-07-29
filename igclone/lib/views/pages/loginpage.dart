@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:igclone/data/constants.dart';
 import 'package:igclone/data/utils.dart';
+import 'package:igclone/responsive/mobilescreenlayout.dart';
+import 'package:igclone/responsive/responsivelayout.dart';
+import 'package:igclone/responsive/webscreenlayout.dart';
+import 'package:igclone/views/pages/registerpage.dart';
 import 'package:igclone/widgets/textfieldinput.dart';
 import 'package:igclone/data/classes/authclass.dart';
 
@@ -32,17 +36,27 @@ class _LoginPageState extends State<LoginPage> {
       email: _emailController.text,
       password: _passwordController.text,
     );
-    print(res);
     if (!mounted) return;
     if (res == 'Success!') {
-      print('trueee');
       showSnackBar(res, context);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
     } else {
       showSnackBar(res, context);
     }
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void navigateToRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterPage()));
   }
 
   @override
@@ -104,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text("Don't have an account? "),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToRegister,
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: const Text("Sign Up.", style: TextStyle(fontWeight: FontWeight.bold)),
