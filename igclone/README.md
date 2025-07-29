@@ -81,3 +81,13 @@
         - Web-optimized image rendering
         - Auth flow adjustments for browsers
         -![](/assets/screenshots/day4webversion.png "web version initialization")
+
+3.  - Implement persisting auth state with help of Firebase Auth.
+        - Just like the original instagram, users dont need to login everytime.
+        - Will integrate with Provider for app-wide access to user state.
+        - Session recovery flow:
+            1. Check cached credentials on app launch
+            2. Silent re-authentication if valid token exists
+            3. Fallback to login screen if session expired
+        - Persistent auth state will be temporarily disabled for testing purposes
+            - ![](/assets/screenshots/code.png "auto signout on app start")
