@@ -19,6 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -42,6 +44,27 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     } else {
       print('user didnt choose image.');
+    }
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthClass().signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      file: _image!,
+    );
+    setState(() {
+      _isLoading = false;
+    });
+    if (!mounted) return;
+    if (res != 'success') {
+      showSnackBar(res, context);
+    } else {
+      showSnackBar('Account created successfully!', context);
     }
   }
 
@@ -108,15 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 16),
               InkWell(
-                onTap: () async {
-                  String res = await AuthClass().signUpUser(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    username: _usernameController.text,
-                    file: _image!,
-                  );
-                  print(res);
-                },
+                onTap: signUpUser,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -127,7 +142,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     color: lavenderColor,
                   ),
-                  child: const Text('Sign up', style: TextStyle(fontSize: 16)),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(color: mobileLightModeBGColor),
+                        )
+                      : const Text('Sign up', style: TextStyle(fontSize: 16)),
                 ),
               ),
               const SizedBox(height: 12),

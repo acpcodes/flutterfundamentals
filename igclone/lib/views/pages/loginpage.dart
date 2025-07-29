@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:igclone/data/constants.dart';
+import 'package:igclone/data/utils.dart';
 import 'package:igclone/widgets/textfieldinput.dart';
+import 'package:igclone/data/classes/authclass.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,12 +15,34 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthClass().loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    print(res);
+    if (!mounted) return;
+    if (res == 'Success!') {
+      print('trueee');
+      showSnackBar(res, context);
+    } else {
+      showSnackBar(res, context);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -52,8 +76,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16),
               InkWell(
-                onTap: () {},
-                //?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                onTap: loginUser,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -64,7 +87,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     color: lavenderColor,
                   ),
-                  child: const Text('Login', style: TextStyle(fontSize: 16)),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(color: mobileLightModeBGColor),
+                        )
+                      : const Text('Login', style: TextStyle(fontSize: 16)),
                 ),
               ),
               const SizedBox(height: 12),

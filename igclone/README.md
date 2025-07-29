@@ -74,3 +74,10 @@
     - Implement upload profile photo function for the register page.
     - Implement workaround for users who chose not to upload a photo.
     - https://drive.google.com/file/d/1ezL3hskLxTYWWASy4BK7OGkywSnvn6sT/view?usp=drive_link
+
+2.  - Initialized Flutter web support (`flutter create --platforms web .`)
+        - Identified web-specific adaptations needed:
+        - Responsive navigation redesign
+        - Web-optimized image rendering
+        - Auth flow adjustments for browsers
+        -![](/assets/screenshots/day4webversion.png "web version initialization")
