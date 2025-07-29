@@ -66,3 +66,11 @@
         - ![](assets/screenshots/day3screenshot1.png "firebase setup1")
         - ![](assets/screenshots/firebasesetup.png "firebase setup2.")
         - ![](assets/screenshots/testregistration.png "registration")
+        - ![](assets/screenshots/testauth.png "firebase auth")
+
+# Day 4 - 29 July 2025
+
+1.  - Implement register page that's already working with firebase backend
+    - Implement upload profile photo function for the register page.
+    - Implement workaround for users who chose not to upload a photo.
+    - https://drive.google.com/file/d/1ezL3hskLxTYWWASy4BK7OGkywSnvn6sT/view?usp=drive_link
