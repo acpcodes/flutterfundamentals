@@ -21,7 +21,7 @@ class MainTree extends StatelessWidget {
           return pages.elementAt(selectedPage);
         },
       ),
-      bottomNavigationBar: BottomNavWidget(),
+      // bottomNavigationBar: BottomNavWidget(),
     );
   }
 }

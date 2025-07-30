@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:igclone/data/notifiers.dart';
+import 'package:igclone/data/constants.dart';
 
 class BottomNavWidget extends StatefulWidget {
-  const BottomNavWidget({super.key});
+  final int selectedIndex;
+  final ValueChanged<int> onItemTapped;
+  const BottomNavWidget({super.key, required this.selectedIndex, required this.onItemTapped});
 
   @override
   State<BottomNavWidget> createState() => _BottomNavWidgetState();
@@ -11,24 +13,54 @@ class BottomNavWidget extends StatefulWidget {
 class _BottomNavWidgetState extends State<BottomNavWidget> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: selectedPageNotifier,
-      builder: (context, selectedPage, child) {
-        return NavigationBar(
-          indicatorColor: Colors.grey.withValues(alpha: 0.01),
-          destinations: [
-            NavigationDestination(icon: Icon(Icons.home_filled, size: 35), label: ''),
-            NavigationDestination(icon: Icon(Icons.search_rounded, size: 35), label: ''),
-            NavigationDestination(icon: Icon(Icons.add_box_outlined, size: 35), label: ''),
-            NavigationDestination(icon: Icon(Icons.play_circle_outlined, size: 35), label: ''),
-            NavigationDestination(icon: Icon(Icons.person_pin_rounded, size: 35), label: ''),
-          ],
-          onDestinationSelected: (int value) {
-            selectedPageNotifier.value = value;
-          },
-          selectedIndex: selectedPage,
-        );
-      },
+    return NavigationBarTheme(
+      data: NavigationBarThemeData(
+        indicatorColor: Colors.transparent,
+        labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const TextStyle(color: Colors.white);
+          }
+          return const TextStyle(color: Colors.black54);
+        }),
+        iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: Colors.white);
+          }
+          return const IconThemeData(color: Colors.black54);
+        }),
+      ),
+      child: NavigationBar(
+        backgroundColor: mobileLightModeBGColor,
+        selectedIndex: widget.selectedIndex,
+        onDestinationSelected: widget.onItemTapped,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home, size: 35),
+            label: '',
+            selectedIcon: Icon(Icons.home, color: Colors.black, size: 40),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.search, size: 35),
+            label: '',
+            selectedIcon: Icon(Icons.search, color: Colors.black, size: 40),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.add_box, size: 35),
+            label: '',
+            selectedIcon: Icon(Icons.add_box, color: Colors.black, size: 40),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.video_library, size: 35),
+            label: '',
+            selectedIcon: Icon(Icons.video_library, color: Colors.black, size: 40),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person, size: 35),
+            label: '',
+            selectedIcon: Icon(Icons.person, color: Colors.black, size: 40),
+          ),
+        ],
+      ),
     );
   }
 }

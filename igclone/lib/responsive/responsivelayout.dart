@@ -1,5 +1,7 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/material.dart';
-import 'package:igclone/data/dimensions.dart';
+import 'package:igclone/data/globalvariables.dart';
 import 'package:igclone/providers/userprovider.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +26,8 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   }
 
   addData() async {
-    UserProvider userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
+    UserProvider _userProvider = Provider.of(context, listen: false);
+    await _userProvider.refreshUser();
   }
 
   @override
