@@ -80,7 +80,7 @@
         - Responsive navigation redesign
         - Web-optimized image rendering
         - Auth flow adjustments for browsers
-        -![](/assets/screenshots/day4webversion.png "web version initialization")
+        -![](assets/screenshots/day4webversion.png "web version initialization")
 
 3.  - Implement persisting auth state with help of Firebase Auth.
         - Just like the original instagram, users dont need to login everytime.
@@ -90,4 +90,10 @@
             2. Silent re-authentication if valid token exists
             3. Fallback to login screen if session expired
         - Persistent auth state will be temporarily disabled for testing purposes
-            - ![](/assets/screenshots/code.png "auto signout on app start")
+        - ![](assets/screenshots/code.png "auto signout on app start")
+
+# Day 4 - 30 July 2025
+
+1.  - Implement 'Add Post' initial page.
+    - ![](assets/screenshots/day5samplepost.png "add new post to feed")
+    - Will implement add to story in the future.

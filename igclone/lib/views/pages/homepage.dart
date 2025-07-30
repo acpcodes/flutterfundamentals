@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:igclone/data/constants.dart';
 import 'package:igclone/widgets/feedwidget.dart';
 import 'package:igclone/widgets/storieswidget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,11 +12,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List _posts = ['post 1', 'post 2', 'post 3'];
+  final List _posts = ['post 1', 'post 2', 'post 3', 'post 4', 'post 5'];
   final List _stories = ['story 1', 'story 2', 'story 3', 'story 4', 'story 5', 'story 6'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mobileLightModeBGColor,
       body: Column(
         children: [
           Container(
@@ -24,11 +27,11 @@ class _HomePageState extends State<HomePage> {
               right: 5,
             ),
             height: MediaQuery.of(context).padding.top + 50,
-            color: Color(0xAAE8F0E3),
+            color: mobileLightModeBGColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('assets/logos/logoblacktext.svg', height: 35),
+                SvgPicture.asset('assets/logos/logoblacktext.svg', height: 35),
                 Row(
                   children: [
                     IconButton(

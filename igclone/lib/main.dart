@@ -30,8 +30,6 @@ class IgClone extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'IG Clone',
         theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: mobileLightModeBGColor)),
-        // home: MainTree(),
-        // home: LoginPage(),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
@@ -51,7 +49,6 @@ class IgClone extends StatelessWidget {
             return const LoginPage();
           },
         ),
-        // home: RegisterPage(),
       ),
     );
   }
