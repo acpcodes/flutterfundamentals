@@ -5,7 +5,6 @@ import 'package:igclone/views/pages/homepage.dart';
 import 'package:igclone/views/pages/profilepage.dart';
 import 'package:igclone/views/pages/reelspage.dart';
 import 'package:igclone/views/pages/searchpage.dart';
-import 'package:igclone/widgets/bottomnavwidget.dart';
 
 List<Widget> pages = [HomePage(), SearchPage(), AddNewPage(), ReelsPage(), ProfilePage()];
 

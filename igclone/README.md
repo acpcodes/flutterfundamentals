@@ -95,5 +95,5 @@
 # Day 4 - 30 July 2025
 
 1.  - Implement 'Add Post' initial page.
-    - ![](assets/screenshots/day5samplepost.png "add new post to feed")
+        - ![](assets/screenshots/day5samplepost.png "add new post to feed")
     - Will implement add to story in the future.
