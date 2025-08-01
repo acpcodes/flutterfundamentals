@@ -1,6 +1,6 @@
 import 'dart:typed_data';
-import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/material.dart';
+import 'package:igclone/data/classes/firestoreclass.dart';
 import 'package:igclone/data/constants.dart';
 import 'package:igclone/data/utils.dart';
 import 'package:igclone/models/usermodel.dart';
@@ -17,6 +17,38 @@ class AddNewPage extends StatefulWidget {
 
 class _AddNewPageState extends State<AddNewPage> {
   Uint8List? _file;
+  final TextEditingController _descriptionController = TextEditingController();
+  bool _isLoading = false;
+  void postImage(String uid, String username, String profImage) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      String res = await FirestoreClass().uploadPost(
+        _descriptionController.text,
+        _file!,
+        uid,
+        username,
+        profImage,
+      );
+      if (!mounted) return;
+      if (res == 'Success!') {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar('Posted!', context);
+        clearImage();
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar(res, context);
+      }
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
+
   _selectImage(BuildContext context) async {
     return showDialog(
       context: context,
@@ -46,10 +78,29 @@ class _AddNewPageState extends State<AddNewPage> {
               },
               child: Text('Choose from gallery'),
             ),
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
           ],
         );
       },
     );
+  }
+
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _descriptionController.dispose();
   }
 
   @override
@@ -72,19 +123,8 @@ class _AddNewPageState extends State<AddNewPage> {
               ),
               centerTitle: false,
               actions: [
-                // TextButton(
-                //   onPressed: () {},
-                //   child: const Text(
-                //     'Story',
-                //     style: TextStyle(
-                //       color: mobileDarkModeBGColor,
-                //       fontSize: 16,
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => postImage(user!.uid, user.username, user.photoUrl),
                   child: const Text(
                     'Feed',
                     style: TextStyle(
@@ -100,6 +140,10 @@ class _AddNewPageState extends State<AddNewPage> {
               padding: const EdgeInsets.only(top: 16),
               child: Column(
                 children: [
+                  _isLoading
+                      ? const LinearProgressIndicator()
+                      : const Padding(padding: EdgeInsets.only(top: 0)),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,6 +152,7 @@ class _AddNewPageState extends State<AddNewPage> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.45,
                         child: TextField(
+                          controller: _descriptionController,
                           decoration: InputDecoration(
                             hintText: 'Caption Here',
                             border: InputBorder.none,

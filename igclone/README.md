@@ -97,3 +97,10 @@
 1.  - Implement 'Add Post' initial page.
         - ![](assets/screenshots/day5samplepost.png "add new post to feed")
     - Will implement add to story in the future.
+
+# Day 6 - 01 August 2025
+
+1. - Implemented upload functionality.
+        - ![](assets/screenshots/Screenshot_1754061477.png)
+        - ![](assets/screenshots/day6%20(1).png)
+        - ![](assets/screenshots/day6%20(2).png)
