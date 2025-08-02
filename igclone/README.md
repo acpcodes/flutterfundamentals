@@ -104,3 +104,8 @@
         - ![](assets/screenshots/Screenshot_1754061477.png)
         - ![](assets/screenshots/day6%20(1).png)
         - ![](assets/screenshots/day6%20(2).png)
+
+# Day 7 - 02 August 2025
+
+1. - Updated feed section
+        - ![](assets/screenshots/day7.png)

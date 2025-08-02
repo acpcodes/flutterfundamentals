@@ -116,7 +116,7 @@ class _AddNewPageState extends State<AddNewPage> {
         : Scaffold(
             backgroundColor: mobileLightModeBGColor,
             appBar: AppBar(
-              leading: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+              leading: IconButton(onPressed: clearImage, icon: Icon(Icons.arrow_back)),
               title: Text(
                 'Post to',
                 style: TextStyle(color: mobileDarkModeBGColor, fontWeight: FontWeight.bold),
