@@ -4,6 +4,7 @@ import 'package:igclone/data/classes/firestoreclass.dart';
 import 'package:igclone/data/constants.dart';
 import 'package:igclone/models/usermodel.dart';
 import 'package:igclone/providers/userprovider.dart';
+import 'package:igclone/views/pages/commentspage.dart';
 import 'package:igclone/widgets/likeanimationwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -116,7 +117,7 @@ class _FeedWidgetState extends State<FeedWidget> {
               ],
             ),
           ),
-          //!Footer Section
+          //!Footer Section - Like button etc
           Row(
             children: [
               LikeAnimationWidget(
@@ -130,10 +131,15 @@ class _FeedWidgetState extends State<FeedWidget> {
                   ),
                   icon: widget.snap()['likes'].contains(user?.uid)
                       ? Icon(FontAwesomeIcons.solidHeart, color: Colors.red.shade500, size: 26)
-                      : Icon(FontAwesomeIcons.heart, color: Colors.black, size: 26),
+                      : Icon(FontAwesomeIcons.heart, size: 26),
                 ),
               ),
-              IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.comment, size: 26)),
+              IconButton(
+                onPressed: () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => CommentsPage())),
+                icon: Icon(FontAwesomeIcons.comment, size: 26),
+              ),
               IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.paperPlane, size: 23.5)),
               Expanded(
                 child: Align(
@@ -143,7 +149,7 @@ class _FeedWidgetState extends State<FeedWidget> {
               ),
             ],
           ),
-          //! Caption and comments.
+          //! Footer section - Caption and comments.
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
