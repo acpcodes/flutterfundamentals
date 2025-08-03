@@ -31,7 +31,10 @@ class HomePage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          return ListView.builder(itemBuilder: (context, index) => FeedWidget());
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) => FeedWidget(snap: snapshot.data!.docs[index].data),
+          );
         },
       ),
     );
