@@ -2,13 +2,14 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:igclone/data/classes/storageclass.dart';
+import 'package:igclone/data/utils.dart';
 import 'package:igclone/models/postmodel.dart';
 import 'package:uuid/uuid.dart';
 
 class FirestoreClass {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  //upload post
+  //! UPLOAD POST
   Future<String> uploadPost(
     String description,
     Uint8List file,
@@ -38,6 +39,7 @@ class FirestoreClass {
     return res;
   }
 
+  //!LIKE POST
   Future<void> likePost(String postID, String uid, List likes) async {
     try {
       if (likes.contains(uid)) {
@@ -48,6 +50,32 @@ class FirestoreClass {
         await _firestore.collection('posts').doc(postID).update({
           'likes': FieldValue.arrayUnion([uid]),
         });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> postComment(
+    String postID,
+    String text,
+    String uid,
+    String name,
+    String profilePic,
+  ) async {
+    try {
+      if (text.isNotEmpty) {
+        String commentID = const Uuid().v1();
+        _firestore.collection('posts').doc(postID).collection('comments').doc(commentID).set({
+          'profilePic': profilePic,
+          'name': name,
+          'uid': uid,
+          'text': text,
+          'commentID': commentID,
+          'datePublished': DateTime.now(),
+        });
+      } else {
+        print('text is empty');
       }
     } catch (e) {
       print(e.toString());

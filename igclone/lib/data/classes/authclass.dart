@@ -33,7 +33,6 @@ class AuthClass {
           email: email,
           password: password,
         );
-        print(cred.user!.uid);
         String photoUrl = await StorageClass().uploadImageToStorage('profilePics', file, false);
         //! add user to database
         model.User user = model.User(

@@ -157,22 +157,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 12),
               Flexible(flex: 2, child: Container()),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Container(
-              //       padding: const EdgeInsets.symmetric(vertical: 16),
-              //       child: const Text("Don't have an account? "),
-              //     ),
-              //     GestureDetector(
-              //       onTap: () {},
-              //       child: Container(
-              //         padding: const EdgeInsets.symmetric(vertical: 16),
-              //         child: const Text("Sign Up.", style: TextStyle(fontWeight: FontWeight.bold)),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),

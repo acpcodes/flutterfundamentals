@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:igclone/data/classes/firestoreclass.dart';
 import 'package:igclone/data/constants.dart';
+import 'package:igclone/data/utils.dart';
 import 'package:igclone/models/usermodel.dart';
 import 'package:igclone/providers/userprovider.dart';
 import 'package:igclone/views/pages/commentspage.dart';
@@ -21,6 +23,28 @@ class FeedWidget extends StatefulWidget {
 
 class _FeedWidgetState extends State<FeedWidget> {
   bool isLikeAnimating = false;
+  int commentLength = 0;
+  @override
+  void initState() {
+    super.initState();
+    getComments();
+  }
+
+  void getComments() async {
+    if (!mounted) return;
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap()['postID'])
+          .collection('comments')
+          .get();
+      commentLength = snap.docs.length;
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final User? user = Provider.of<UserProvider>(context).getUser;
@@ -137,7 +161,7 @@ class _FeedWidgetState extends State<FeedWidget> {
               IconButton(
                 onPressed: () => Navigator.of(
                   context,
-                ).push(MaterialPageRoute(builder: (context) => CommentsPage())),
+                ).push(MaterialPageRoute(builder: (context) => CommentsPage(snap: widget.snap))),
                 icon: Icon(FontAwesomeIcons.comment, size: 26),
               ),
               IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.paperPlane, size: 23.5)),
@@ -186,7 +210,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 4),
                     child: Text(
-                      'View All 3 comments',
+                      'View All $commentLength comments',
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ),
