@@ -31,7 +31,6 @@ class _FeedWidgetState extends State<FeedWidget> {
   }
 
   void getComments() async {
-    if (!mounted) return;
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection('posts')
@@ -40,9 +39,15 @@ class _FeedWidgetState extends State<FeedWidget> {
           .get();
       commentLength = snap.docs.length;
     } catch (e) {
-      showSnackBar(e.toString(), context);
+      if (mounted) {
+        showSnackBar(e.toString(), context);
+      }
     }
-    setState(() {});
+
+    // The key fix is here:
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -84,7 +89,10 @@ class _FeedWidgetState extends State<FeedWidget> {
                           children: ['Delete']
                               .map(
                                 (e) => InkWell(
-                                  onTap: () {},
+                                  onTap: () async {
+                                    FirestoreClass().deletePost(widget.snap()['postID']);
+                                    Navigator.of(context).pop();
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 12,
@@ -205,16 +213,18 @@ class _FeedWidgetState extends State<FeedWidget> {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    child: Text(
-                      'View All $commentLength comments',
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                  ),
-                ),
+                commentLength > 0
+                    ? InkWell(
+                        onTap: () {},
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Text(
+                            'View All $commentLength comments',
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 2),
                   child: Text(

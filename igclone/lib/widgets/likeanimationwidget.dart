@@ -44,20 +44,23 @@ class _LikeAnimationWidgetState extends State<LikeAnimationWidget>
 
   startAnimation() async {
     if (widget.isAnimating || widget.smallLike) {
-      await controller.forward();
-      await controller.reverse();
-      await Future.delayed(const Duration(milliseconds: 200));
-
-      if (widget.onEnd != null) {
-        widget.onEnd!();
+      // Check if the widget is mounted before running the animation to prevent errors
+      if (mounted) {
+        await controller.forward();
+        await controller.reverse();
+        // You might want to also add a mounted check here, after the awaits
+        if (mounted && widget.onEnd != null) {
+          widget.onEnd!();
+        }
       }
     }
   }
 
   @override
   void dispose() {
-    super.dispose();
+    // Corrected: Dispose the controller BEFORE calling super.dispose()
     controller.dispose();
+    super.dispose();
   }
 
   @override
