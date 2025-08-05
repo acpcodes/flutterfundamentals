@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:igclone/data/constants.dart';
+import 'package:igclone/data/globalvariables.dart';
 import 'package:igclone/data/utils.dart';
 import 'package:igclone/responsive/mobilescreenlayout.dart';
 import 'package:igclone/responsive/responsivelayout.dart';
@@ -64,7 +65,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          padding: MediaQuery.of(context).size.width > webScreenSize
+              ? EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 3)
+              : EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

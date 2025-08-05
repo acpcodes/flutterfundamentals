@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:igclone/data/constants.dart';
-import 'dart:math';
-
 import 'package:igclone/views/pages/profilepage.dart';
 
 class SearchPage extends StatefulWidget {
@@ -15,9 +13,18 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController searchController = TextEditingController();
-
-  final random = Random();
   bool isShowUser = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add a listener to the controller to handle real-time UI changes
+    searchController.addListener(() {
+      setState(() {
+        isShowUser = searchController.text.isNotEmpty;
+      });
+    });
+  }
 
   @override
   void dispose() {
@@ -32,7 +39,10 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: mobileLightModeBGColor,
         title: TextFormField(
           controller: searchController,
-          decoration: const InputDecoration(labelText: 'Search user'),
+          decoration: const InputDecoration(
+            labelText: 'Search for a user',
+            border: InputBorder.none,
+          ),
           onFieldSubmitted: (String _) {
             setState(() {
               isShowUser = true;
@@ -41,32 +51,31 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
       body: isShowUser
-          ? FutureBuilder(
+          ? FutureBuilder<QuerySnapshot>(
               future: FirebaseFirestore.instance
                   .collection('users')
                   .where('username', isGreaterThanOrEqualTo: searchController.text)
+                  .where('username', isLessThan: '${searchController.text}\uf8ff')
                   .get(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(child: Text('No users found.'));
+                }
+
                 return ListView.builder(
-                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
+                    final userData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
                     return InkWell(
                       onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ProfilePage(uid: (snapshot.data! as dynamic).docs[index]['uid']),
-                        ),
+                        MaterialPageRoute(builder: (context) => ProfilePage(uid: userData['uid'])),
                       ),
                       child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            (snapshot.data! as dynamic).docs[index]['photoUrl'],
-                          ),
-                        ),
-                        title: Text((snapshot.data! as dynamic).docs[index]['username']),
+                        leading: CircleAvatar(backgroundImage: NetworkImage(userData['photoUrl'])),
+                        title: Text(userData['username']),
                       ),
                     );
                   },
@@ -76,33 +85,45 @@ class _SearchPageState extends State<SearchPage> {
           : FutureBuilder<QuerySnapshot>(
               future: FirebaseFirestore.instance.collection('posts').get(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+                if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
                 final posts = snapshot.data!.docs;
 
-                return Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: StaggeredGrid.count(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 3,
-                    crossAxisSpacing: 3,
-                    children: List.generate(posts.length, (index) {
-                      final post = posts[index];
-                      final imageUrl = post['photoUrl'];
-                      final crossAxisCellCount = random.nextBool() ? 2 : 1;
-                      final mainAxisCellCount = crossAxisCellCount == 2 ? 2 : 1 + random.nextInt(2);
-                      return StaggeredGridTile.count(
-                        crossAxisCellCount: crossAxisCellCount,
-                        mainAxisCellCount: mainAxisCellCount,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.network(imageUrl, fit: BoxFit.cover),
-                        ),
-                      );
-                    }),
-                  ),
+                return StaggeredGrid.count(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 2,
+                  crossAxisSpacing: 2,
+                  children: List.generate(posts.length, (index) {
+                    final post = posts[index];
+                    final imageUrl = post['photoUrl'];
+
+                    final patternIndex = index % 10;
+
+                    int crossAxisCellCount;
+                    int mainAxisCellCount;
+
+                    switch (patternIndex) {
+                      case 4:
+                        crossAxisCellCount = 2;
+                        mainAxisCellCount = 2;
+                        break;
+                      case 5:
+                        crossAxisCellCount = 1;
+                        mainAxisCellCount = 2;
+                        break;
+                      default:
+                        crossAxisCellCount = 1;
+                        mainAxisCellCount = 1;
+                    }
+
+                    return StaggeredGridTile.count(
+                      crossAxisCellCount: crossAxisCellCount,
+                      mainAxisCellCount: mainAxisCellCount,
+                      child: Image.network(imageUrl, fit: BoxFit.cover),
+                    );
+                  }),
                 );
               },
             ),

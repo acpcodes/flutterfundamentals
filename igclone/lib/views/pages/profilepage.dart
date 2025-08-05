@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:igclone/data/classes/authclass.dart';
 import 'package:igclone/data/classes/firestoreclass.dart';
 import 'package:igclone/data/constants.dart';
-import 'package:igclone/data/utils.dart';
+import 'package:igclone/views/pages/loginpage.dart';
 import 'package:igclone/widgets/followwidget.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -52,9 +53,9 @@ class _ProfilePageState extends State<ProfilePage> {
       );
       setState(() {});
     } catch (e) {
-      if (mounted) {
-        showSnackBar(e.toString(), context);
-      }
+      // if (mounted) {
+      //   showSnackBar(e.toString(), context);
+      // }
     }
     setState(() {
       isLoading = false;
@@ -73,7 +74,12 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: false,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.solidMoon)),
-          IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.arrowRightFromBracket)),
+          IconButton(
+            onPressed: () {
+              showAlertDialog(context);
+            },
+            icon: Icon(FontAwesomeIcons.arrowRightFromBracket),
+          ),
         ],
       ),
       body: ListView(
@@ -99,13 +105,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               buildStatColumn(postLength, "posts"),
                               buildStatColumn(followers, "followers"),
-                              buildStatColumn(followers, "following"),
+                              buildStatColumn(following, "following"),
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              FirebaseAuth.instance.currentUser!.uid == widget.uid
+                              FirebaseAuth.instance.currentUser?.uid == widget.uid
                                   ? FollowWidget(
                                       text: 'Edit Profile',
                                       backgroundColor: mobileLightModeBGColor,
@@ -215,6 +221,40 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ],
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Signout"),
+      onPressed: () {
+        AuthClass().signOut();
+        Navigator.of(
+          context,
+        ).pushReplacement(MaterialPageRoute(builder: (context) => const LoginPage()));
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Signout"),
+      content: Text("Are you sure you wanna signout"),
+      actions: [cancelButton, continueButton],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
