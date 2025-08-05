@@ -47,13 +47,7 @@ class AuthClass {
 
         res = "Success!";
       }
-    }
-    // on FirebaseAuthException catch (err){
-    //   if(err.code == 'inavild-email'){
-    //     res = 'Bad email format.';
-    //   }
-    // }
-    catch (err) {
+    } catch (err) {
       res = err.toString();
     }
     return res;

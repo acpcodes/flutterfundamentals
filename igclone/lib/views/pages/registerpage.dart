@@ -101,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ? CircleAvatar(backgroundImage: MemoryImage(_image!), radius: 64)
                       : const CircleAvatar(
                           backgroundImage: NetworkImage(
-                            'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg',
+                            'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png',
                           ),
                           radius: 64,
                         ),

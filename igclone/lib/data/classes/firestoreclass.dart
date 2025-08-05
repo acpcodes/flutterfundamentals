@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:igclone/data/classes/storageclass.dart';
-import 'package:igclone/data/utils.dart';
 import 'package:igclone/models/postmodel.dart';
 import 'package:uuid/uuid.dart';
 
@@ -74,11 +73,9 @@ class FirestoreClass {
           'commentID': commentID,
           'datePublished': DateTime.now(),
         });
-      } else {
-        print('text is empty');
-      }
+      } else {}
     } catch (e) {
-      print(e.toString());
+      //do nothing
     }
   }
 
@@ -86,6 +83,31 @@ class FirestoreClass {
   Future<void> deletePost(String postID) async {
     try {
       await _firestore.collection('posts').doc(postID).delete();
+    } catch (e) {
+      //do nothing
+    }
+  }
+
+  Future<void> followUser(String uid, String followID) async {
+    try {
+      DocumentSnapshot snap = await _firestore.collection('users').doc(uid).get();
+      List following = (snap.data()! as dynamic)['following'];
+
+      if (following.contains(followID)) {
+        await _firestore.collection('users').doc(followID).update({
+          'followers': FieldValue.arrayRemove([uid]),
+        });
+        await _firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayRemove([followID]),
+        });
+      } else {
+        await _firestore.collection('users').doc(followID).update({
+          'followers': FieldValue.arrayUnion([uid]),
+        });
+        await _firestore.collection('users').doc(uid).update({
+          'following': FieldValue.arrayUnion([followID]),
+        });
+      }
     } catch (e) {
       print(e.toString());
     }

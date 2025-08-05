@@ -15,8 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const IgClone());
-  // await FirebaseAuth.instance.signOut();
-  // print('User logged out on app start for testing purposes.');
+  await FirebaseAuth.instance.signOut();
+  print('User logged out on app start for testing purposes.');
 }
 
 class IgClone extends StatelessWidget {

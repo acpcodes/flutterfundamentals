@@ -4,6 +4,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:igclone/data/constants.dart';
 import 'dart:math';
 
+import 'package:igclone/views/pages/profilepage.dart';
+
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -51,13 +53,21 @@ class _SearchPageState extends State<SearchPage> {
                 return ListView.builder(
                   itemCount: (snapshot.data! as dynamic).docs.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          (snapshot.data! as dynamic).docs[index]['photoUrl'],
+                    return InkWell(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilePage(uid: (snapshot.data! as dynamic).docs[index]['uid']),
                         ),
                       ),
-                      title: Text((snapshot.data! as dynamic).docs[index]['username']),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            (snapshot.data! as dynamic).docs[index]['photoUrl'],
+                          ),
+                        ),
+                        title: Text((snapshot.data! as dynamic).docs[index]['username']),
+                      ),
                     );
                   },
                 );
