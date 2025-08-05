@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:igclone/data/classes/authclass.dart';
 import 'package:igclone/data/classes/firestoreclass.dart';
 import 'package:igclone/data/constants.dart';
+import 'package:igclone/views/pages/editprofilepage.dart';
 import 'package:igclone/views/pages/loginpage.dart';
 import 'package:igclone/widgets/followwidget.dart';
 
@@ -117,7 +118,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                       backgroundColor: mobileLightModeBGColor,
                                       textColor: Colors.black,
                                       borderColor: Colors.grey,
-                                      function: () {},
+                                      function: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const EditProfilePage(),
+                                          ),
+                                        );
+                                      },
                                     )
                                   : isFollowing
                                   ? FollowWidget(
@@ -171,7 +179,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.only(top: 1),
                   //!Implement Bio for user. userData['bio']
-                  child: Text('Bio', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+                  child: Text(
+                    userData['bio'],
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                  ),
                 ),
               ],
             ),

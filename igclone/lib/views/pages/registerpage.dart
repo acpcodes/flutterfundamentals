@@ -57,6 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
       password: _passwordController.text,
       username: _usernameController.text,
       file: _image!,
+      bio: '',
     );
     setState(() {
       _isLoading = false;

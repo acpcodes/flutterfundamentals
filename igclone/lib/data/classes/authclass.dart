@@ -17,12 +17,13 @@ class AuthClass {
     return model.User.fromSnap(snap);
   }
 
-  //signup
+  //!signup
   Future<String> signUpUser({
     required String email,
     required String password,
     required String username,
     required Uint8List file,
+    required String bio,
   }) async {
     String res = 'Some error occured';
     try {
@@ -42,6 +43,7 @@ class AuthClass {
           followers: [],
           following: [],
           photoUrl: photoUrl,
+          bio: bio,
         );
         await _fireStore.collection('users').doc(cred.user!.uid).set(user.toJson());
 
