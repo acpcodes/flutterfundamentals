@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:igclone/approuter.dart';
@@ -27,14 +28,23 @@ class IgClone extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => UserProvider(),
         ),
-        Provider<GoRouter>.value(
-          value: appRouter,
-        ),
       ],
-      child: Builder(
-        builder: (context) {
-          final GoRouter router =
-              Provider.of<GoRouter>(context);
+      child: FutureBuilder(
+        future: FirebaseAuth.instance
+            .authStateChanges()
+            .first,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState ==
+              ConnectionState.waiting) {
+            return const MaterialApp(
+              home: Scaffold(
+                body: Center(
+                  child:
+                      CircularProgressIndicator(),
+                ),
+              ),
+            );
+          }
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: 'IG Clone',
@@ -43,7 +53,7 @@ class IgClone extends StatelessWidget {
                 seedColor: mobileLightModeBGColor,
               ),
             ),
-            routerConfig: router,
+            routerConfig: appRouter,
           );
         },
       ),

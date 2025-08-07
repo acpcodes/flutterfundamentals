@@ -40,20 +40,19 @@ final GoRouter appRouter = GoRouter(
       },
     ),
   ],
+  // },
   redirect: (context, state) {
-    final bool loggedIn =
-        FirebaseAuth.instance.currentUser != null;
+    final user =
+        FirebaseAuth.instance.currentUser;
 
-    final bool goingToLogin =
-        state.matchedLocation == '/login';
-
-    if (!loggedIn && !goingToLogin) {
-      return '/login';
-    }
-    if (loggedIn && goingToLogin) {
+    if (user == null &&
+        state.matchedLocation != '/') {
       return '/';
     }
-
+    if (user != null &&
+        state.matchedLocation == '/') {
+      return '/home';
+    }
     return null;
   },
   refreshListenable: GoRouterRefreshStream(
