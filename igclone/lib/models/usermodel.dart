@@ -42,7 +42,8 @@ class User {
         bio: '',
       );
     }
-    var snapshot = snap.data()! as Map<String, dynamic>;
+    var snapshot =
+        snap.data()! as Map<String, dynamic>;
     return User(
       username: snapshot['username'],
       uid: snapshot['uid'],

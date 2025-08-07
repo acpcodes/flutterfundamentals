@@ -3,23 +3,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:igclone/data/constants.dart';
 import 'package:igclone/data/globalvariables.dart';
 import 'package:igclone/data/utils.dart';
-import 'package:igclone/responsive/mobilescreenlayout.dart';
-import 'package:igclone/responsive/responsivelayout.dart';
-import 'package:igclone/responsive/webscreenlayout.dart';
 import 'package:igclone/views/pages/registerpage.dart';
 import 'package:igclone/widgets/textfieldinput.dart';
 import 'package:igclone/data/classes/authclass.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPage> createState() =>
+      _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController();
+  final TextEditingController
+  _passwordController = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -40,14 +41,18 @@ class _LoginPageState extends State<LoginPage> {
     if (!mounted) return;
     if (res == 'Success!') {
       showSnackBar(res, context);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            webScreenLayout: WebScreenLayout(),
-            mobileScreenLayout: MobileScreenLayout(),
-          ),
-        ),
-      );
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) =>
+      //         const ResponsiveLayout(
+      //           webScreenLayout:
+      //               WebScreenLayout(),
+      //           mobileScreenLayout:
+      //               MobileScreenLayout(),
+      //         ),
+      //   ),
+      // );
+      context.goNamed('home');
     } else {
       showSnackBar(res, context);
     }
@@ -57,7 +62,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void navigateToRegister() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => RegisterPage()));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => RegisterPage(),
+      ),
+    );
   }
 
   @override
@@ -65,22 +74,41 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: MediaQuery.of(context).size.width > webScreenSize
-              ? EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 3)
-              : EdgeInsets.symmetric(horizontal: 32),
+          padding:
+              MediaQuery.of(context).size.width >
+                  webScreenSize
+              ? EdgeInsets.symmetric(
+                  horizontal:
+                      MediaQuery.of(
+                        context,
+                      ).size.width /
+                      3,
+                )
+              : EdgeInsets.symmetric(
+                  horizontal: 32,
+                ),
           width: double.infinity,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment:
+                CrossAxisAlignment.center,
             children: [
-              Flexible(flex: 2, child: Container()),
+              Flexible(
+                flex: 2,
+                child: Container(),
+              ),
               //!instagram logo
-              SvgPicture.asset('assets/logos/logoblacktext.svg', height: 64),
+              SvgPicture.asset(
+                'assets/logos/logoblacktext.svg',
+                height: 64,
+              ),
               const SizedBox(height: 64),
               //!text field input for email
               TextFieldInput(
                 hintText: 'Enter Email',
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _emailController,
+                textInputType:
+                    TextInputType.emailAddress,
+                textEditingController:
+                    _emailController,
               ),
               const SizedBox(height: 8),
               //!text field input for password
@@ -88,7 +116,8 @@ class _LoginPageState extends State<LoginPage> {
               TextFieldInput(
                 hintText: 'Enter Password',
                 textInputType: TextInputType.text,
-                textEditingController: _passwordController,
+                textEditingController:
+                    _passwordController,
                 isPass: true,
               ),
               const SizedBox(height: 16),
@@ -97,34 +126,66 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(
+                        vertical: 12,
+                      ),
                   decoration: const ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius:
+                          BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                     ),
                     color: lavenderColor,
                   ),
                   child: _isLoading
                       ? const Center(
-                          child: CircularProgressIndicator(color: mobileLightModeBGColor),
+                          child: CircularProgressIndicator(
+                            color:
+                                mobileLightModeBGColor,
+                          ),
                         )
-                      : const Text('Login', style: TextStyle(fontSize: 16)),
+                      : const Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 12),
-              Flexible(flex: 2, child: Container()),
+              Flexible(
+                flex: 2,
+                child: Container(),
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: const Text("Don't have an account? "),
+                    padding:
+                        const EdgeInsets.symmetric(
+                          vertical: 16,
+                        ),
+                    child: const Text(
+                      "Don't have an account? ",
+                    ),
                   ),
                   GestureDetector(
                     onTap: navigateToRegister,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: const Text("Sign Up.", style: TextStyle(fontWeight: FontWeight.bold)),
+                      padding:
+                          const EdgeInsets.symmetric(
+                            vertical: 16,
+                          ),
+                      child: const Text(
+                        "Sign Up.",
+                        style: TextStyle(
+                          fontWeight:
+                              FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],

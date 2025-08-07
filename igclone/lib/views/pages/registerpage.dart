@@ -12,13 +12,18 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<RegisterPage> createState() =>
+      _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
+class _RegisterPageState
+    extends State<RegisterPage> {
+  final TextEditingController _emailController =
+      TextEditingController();
+  final TextEditingController
+  _passwordController = TextEditingController();
+  final TextEditingController
+  _usernameController = TextEditingController();
   Uint8List? _image;
   bool _isLoading = false;
 
@@ -31,14 +36,18 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _loadDefaultImage() async {
     // Replace 'assets/default_profile_pic.png' with the actual path to your default image
     // Make sure this asset is declared in your pubspec.yaml under 'assets:'
-    final ByteData bytes = await rootBundle.load('assets/default_images/default_pfp.jpg');
+    final ByteData bytes = await rootBundle.load(
+      'assets/default_images/default_pfp.jpg',
+    );
     setState(() {
       _image = bytes.buffer.asUint8List();
     });
   }
 
   void selectImage() async {
-    Uint8List? im = await pickImage(ImageSource.gallery);
+    Uint8List? im = await pickImage(
+      ImageSource.gallery,
+    );
     if (im != null) {
       setState(() {
         _image = im;
@@ -66,13 +75,20 @@ class _RegisterPageState extends State<RegisterPage> {
     if (res != 'Success!') {
       showSnackBar(res, context);
     } else {
-      showSnackBar('Account created successfully!', context);
+      showSnackBar(
+        'Account created successfully!',
+        context,
+      );
       navigateToLogin();
     }
   }
 
   void navigateToLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
   }
 
   @override
@@ -88,30 +104,49 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          padding: EdgeInsets.symmetric(
+            horizontal: 32,
+          ),
           width: double.infinity,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment:
+                CrossAxisAlignment.center,
             children: [
-              Flexible(flex: 2, child: Container()),
-              SvgPicture.asset('assets/logos/logoblacktext.svg', height: 64),
+              Flexible(
+                flex: 2,
+                child: Container(),
+              ),
+              SvgPicture.asset(
+                'assets/logos/logoblacktext.svg',
+                height: 64,
+              ),
               const SizedBox(height: 64),
               Stack(
                 children: [
                   _image != null
-                      ? CircleAvatar(backgroundImage: MemoryImage(_image!), radius: 64)
+                      ? CircleAvatar(
+                          backgroundImage:
+                              MemoryImage(
+                                _image!,
+                              ),
+                          radius: 64,
+                        )
                       : const CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png',
-                          ),
+                          backgroundImage:
+                              NetworkImage(
+                                'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png',
+                              ),
                           radius: 64,
                         ),
                   Positioned(
                     bottom: -10,
                     left: 78,
                     child: IconButton(
-                      onPressed: () => selectImage(),
-                      icon: const Icon(Icons.add_a_photo),
+                      onPressed: () =>
+                          selectImage(),
+                      icon: const Icon(
+                        Icons.add_a_photo,
+                      ),
                     ),
                   ),
                 ],
@@ -120,20 +155,24 @@ class _RegisterPageState extends State<RegisterPage> {
               TextFieldInput(
                 hintText: 'Enter Username',
                 textInputType: TextInputType.text,
-                textEditingController: _usernameController,
+                textEditingController:
+                    _usernameController,
               ),
               const SizedBox(height: 8),
               TextFieldInput(
                 hintText: 'Enter Email',
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _emailController,
+                textInputType:
+                    TextInputType.emailAddress,
+                textEditingController:
+                    _emailController,
               ),
               const SizedBox(height: 8),
               //register button
               TextFieldInput(
                 hintText: 'Enter Password',
                 textInputType: TextInputType.text,
-                textEditingController: _passwordController,
+                textEditingController:
+                    _passwordController,
                 isPass: true,
               ),
               const SizedBox(height: 16),
@@ -142,22 +181,59 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(
+                        vertical: 12,
+                      ),
                   decoration: const ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius:
+                          BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                     ),
                     color: lavenderColor,
                   ),
                   child: _isLoading
                       ? const Center(
-                          child: CircularProgressIndicator(color: mobileLightModeBGColor),
+                          child: CircularProgressIndicator(
+                            color:
+                                mobileLightModeBGColor,
+                          ),
                         )
-                      : const Text('Sign up', style: TextStyle(fontSize: 16)),
+                      : const Text(
+                          'Sign-up',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight:
+                                FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 12),
-              Flexible(flex: 2, child: Container()),
+              Flexible(
+                flex: 2,
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account? ',
+                    ),
+                    GestureDetector(
+                      onTap: navigateToLogin,
+                      child: Text(
+                        'Sign-in.',
+                        style: TextStyle(
+                          fontWeight:
+                              FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

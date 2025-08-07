@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
@@ -33,7 +35,8 @@ class Post {
   };
 
   static Post fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+    var snapshot =
+        snap.data() as Map<String, dynamic>;
     return Post(
       description: '',
       uid: '',
