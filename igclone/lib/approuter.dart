@@ -7,6 +7,7 @@ import 'package:igclone/responsive/webscreenlayout.dart';
 import 'package:igclone/views/pages/commentspage.dart';
 import 'package:igclone/views/pages/loginpage.dart';
 import 'package:igclone/responsive/responsivelayout.dart';
+import 'package:igclone/views/pages/registerpage.dart';
 
 // Define your GoRouter instance
 final GoRouter appRouter = GoRouter(
@@ -39,6 +40,12 @@ final GoRouter appRouter = GoRouter(
         return CommentsPage(snap: snap);
       },
     ),
+    GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) =>
+          const RegisterPage(),
+    ),
   ],
   // },
   redirect: (context, state) {
@@ -49,6 +56,7 @@ final GoRouter appRouter = GoRouter(
         state.matchedLocation != '/') {
       return '/';
     }
+    // if(user == null && )
     if (user != null &&
         state.matchedLocation == '/') {
       return '/home';

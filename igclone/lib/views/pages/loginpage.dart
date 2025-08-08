@@ -41,17 +41,6 @@ class _LoginPageState extends State<LoginPage> {
     if (!mounted) return;
     if (res == 'Success!') {
       showSnackBar(res, context);
-      // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(
-      //     builder: (context) =>
-      //         const ResponsiveLayout(
-      //           webScreenLayout:
-      //               WebScreenLayout(),
-      //           mobileScreenLayout:
-      //               MobileScreenLayout(),
-      //         ),
-      //   ),
-      // );
       context.goNamed('home');
     } else {
       showSnackBar(res, context);

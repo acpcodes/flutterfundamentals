@@ -1,9 +1,8 @@
 // ignore_for_file: avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:igclone/approuter.dart';
-import 'package:igclone/data/constants.dart';
+import 'package:igclone/data/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:igclone/providers/userprovider.dart';
 import 'firebase_options.dart';
@@ -47,12 +46,8 @@ class IgClone extends StatelessWidget {
           }
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            title: 'IG Clone',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: mobileLightModeBGColor,
-              ),
-            ),
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
             routerConfig: appRouter,
           );
         },

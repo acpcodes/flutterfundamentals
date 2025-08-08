@@ -30,30 +30,43 @@ class _RegisterPageState
   @override
   void initState() {
     super.initState();
-    _loadDefaultImage(); // Call this to set the default image on startup
+    _loadDefaultImage();
   }
 
   Future<void> _loadDefaultImage() async {
-    // Replace 'assets/default_profile_pic.png' with the actual path to your default image
-    // Make sure this asset is declared in your pubspec.yaml under 'assets:'
     final ByteData bytes = await rootBundle.load(
-      'assets/default_images/default_pfp.jpg',
+      'assets/default_images/default.png',
     );
     setState(() {
       _image = bytes.buffer.asUint8List();
     });
   }
 
+  bool _isPickingImage = false;
+
   void selectImage() async {
-    Uint8List? im = await pickImage(
-      ImageSource.gallery,
-    );
-    if (im != null) {
-      setState(() {
-        _image = im;
-      });
-    } else {
-      print('user didnt choose image.');
+    if (_isPickingImage) {
+      return;
+    }
+
+    _isPickingImage = true;
+
+    try {
+      Uint8List? im = await pickImage(
+        ImageSource.gallery,
+      );
+
+      if (im != null) {
+        setState(() {
+          _image = im;
+        });
+      } else {
+        print('user didn’t choose image.');
+      }
+    } catch (e) {
+      print('Image picker error: $e');
+    } finally {
+      _isPickingImage = false;
     }
   }
 
@@ -132,10 +145,13 @@ class _RegisterPageState
                           radius: 64,
                         )
                       : const CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(
-                                'https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png',
-                              ),
+                          backgroundImage: AssetImage(
+                            'assets/default_images/default.png',
+                          ),
+                          backgroundColor:
+                              Colors.white,
+                          foregroundColor:
+                              Colors.white,
                           radius: 64,
                         ),
                   Positioned(
@@ -213,25 +229,27 @@ class _RegisterPageState
               ),
               const SizedBox(height: 12),
               Flexible(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account? ',
-                    ),
-                    GestureDetector(
-                      onTap: navigateToLogin,
-                      child: Text(
-                        'Sign-in.',
-                        style: TextStyle(
-                          fontWeight:
-                              FontWeight.bold,
+                flex: 1,
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account? ',
+                      ),
+                      GestureDetector(
+                        onTap: navigateToLogin,
+                        child: Text(
+                          'Sign-in.',
+                          style: TextStyle(
+                            fontWeight:
+                                FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
